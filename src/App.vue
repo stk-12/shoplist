@@ -2,30 +2,38 @@
   <div id="app">
     <div class="shopList">
       <div class="area">
-        <ul>
-          <li v-for="(information, index) in informations" :key="index">
-            <p class="shop">{{ information.shop }}</p>
-            <p class="tel">{{ information.tel }}</p>
+        <h2>北海道</h2>
+        <ul class="shoplist">
+          <li v-for="info in filteredHokkaido">
+            <p class="shop">{{ info.shop }}</p>
+            <p class="tel">{{ info.tel }}</p>
             <div class="add">
-              <p class="postal">{{ information.postal }}</p>
-              <p class="address">{{ information.address }}</p>
+              <p class="postal">{{ info.postal }}</p>
+              <p class="address">{{ info.address }}</p>
             </div>
           </li>
         </ul>
-        <pre>{{ $data }}</pre>
+      </div>
+      <div class="area">
+        <h2>青森県</h2>
+        <ul class="shoplist">
+          <li v-for="info in filteredAomori">
+            <p class="shop">{{ info.shop }}</p>
+            <p class="tel">{{ info.tel }}</p>
+            <div class="add">
+              <p class="postal">{{ info.postal }}</p>
+              <p class="address">{{ info.address }}</p>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'app',
-  // components: {
-  //   HelloWorld
-  // }
   data () {
     return {
       informations: null
@@ -38,16 +46,45 @@ export default {
       .then(function (response){
         vm.informations = response.data
       })
+  },
+  computed: {
+    filteredHokkaido: function(){
+      return this.informations.filter(function(info){
+        return info.prefectures === "北海道"
+      })
+    },
+    filteredAomori: function(){
+      return this.informations.filter(function(info){
+        return info.prefectures === "青森県"
+      })
+    }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
+}
+h2 {
+  background: #000;
+  color: #fff;
+  padding: 10px 25px;
+}
+.shoplist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    padding: 20px 25px;
+    border-bottom: 1px solid #aaa;
+    &:last-child {
+      border: none;
+    }
+  }
 }
 </style>
