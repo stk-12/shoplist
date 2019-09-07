@@ -36,7 +36,7 @@ export default {
   name: 'app',
   data () {
     return {
-      informations: null
+      informations: []
     }
   },
   created() {
